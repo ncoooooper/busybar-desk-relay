@@ -2,5 +2,5 @@
   "category": "social",
   "short_description": "Give the next desk shift to an available person with the fewest completed turns.",
   "description": "Give the next desk shift to an available person with the fewest completed turns. Set three team names in device settings. The bar suggests the available person with the fewest completed shifts, breaking ties by rotation. Click to assign and complete the suggestion. Turn to inspect another person, Start toggles their availability, and hold the wheel to return to the suggestion.",
-  "changelog": "First public version."
+  "changelog": "New screen transitions and high-contrast LED previews."
 }

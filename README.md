@@ -4,6 +4,20 @@ Give the next desk shift to an available person with the fewest completed turns.
 
 Keep the bar by the shared desk. Anyone can see who takes the next shift, and someone coming back from lunch keeps credit for the shifts they have already covered.
 
+## Screen transitions
+
+Follow the turn indicator as the desk passes to another person.
+
+![Desk Relay front display. Follow the turn indicator as the desk passes to another person.](media/guide/screen-transitions.gif)
+
+<details>
+
+<summary>Watch the rear display</summary>
+
+![Desk Relay rear display during the recorded controls](media/guide/screen-transitions-rear.gif)
+
+</details>
+
 ## Hand the desk to the next person
 
 1. Set the three names in the app settings. The defaults are Ari, Bo and Cam.
@@ -36,7 +50,7 @@ Open BUSY Bar Emulator. From this repository, run:
 
 Press **Back** to exit.
 
-The GIFs are excerpts from the emulator recording. Each front-display pixel is shown at 9× its original width and height. The end frames pause for reading.
+The GIFs are excerpts from the emulator recording. Each LED occupies a 16 × 16 cell with a black border. The end frames pause for reading.
 
 [Full recording](media/controls.mp4) · [Rear display](screenshots/back-1.png) · [Firmware test](EMULATOR-QA.md) · [MIT license](LICENSE)
 

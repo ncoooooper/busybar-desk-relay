@@ -11,7 +11,7 @@
   "frames": 54,
   "distinct_frames": 20,
   "exit": "App io.ncoooooper.deskrelay exited: finished; heap peak 83.5 of 128 KiB",
-  "sha256": "f0fb7cbb076da03e2658bc952de831a0760fa27fb0366f520be9256e3218e61a",
+  "sha256": "0db66f1be9654c28a4bc24b9d8360e5dcc9faca3541680ce4d78a38cbfbd226f",
   "display_test": {
     "firmware": "1.3.1",
     "input": "On-device controls",
