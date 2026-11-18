@@ -1,66 +1,13 @@
-import { device } from "@shared/device";
-import { column, render, type Node } from "@busy-app/busy-lib";
-import manifest from "./appmeta/manifest.json";
-
-/** The name the app draws under; the device clears elements by this id. */
-const APP = manifest.id;
-
-/** How often the screen is redrawn. */
-const TICK_MS = 1000;
-
-const WHITE = "#FFFFFFFF";
-const SUBTLE_WHITE = "#FFFFFF80";
-
-/**
- * The frame drawn on every tick. The screen is 72×16, so two short lines are about all that fits.
- */
-function frame(ticks: number): Node {
-  return column({ justify: "center", align: "center" }, [
-    { type: "text", id: "title", text: "Hello", font: "bold", color: WHITE },
-    {
-      type: "text",
-      id: "ticks",
-      text: String(ticks),
-      font: "small",
-      color: SUBTLE_WHITE,
-    },
-  ]);
-}
-
-/** Sends one frame to the device. */
-async function draw(ticks: number): Promise<void> {
-  const elements = render(frame(ticks));
-  await device.DisplayDraw({ application_name: APP, priority: 50, elements });
-}
-
-/**
- * Entry point, called at the end of the file: the device runs this script from top to bottom and starts nothing by itself.
- */
-function main(): void {
-  let ticks = 0;
-  let stopped = false;
-
-  const report = (err: unknown) =>
-    console.error(`${APP}: ${err instanceof Error ? err.message : String(err)}`);
-
-  void draw(ticks).catch(report);
-
-  // Tick errors are reported, not thrown: one failed request must not stop the loop.
-  const timer = setInterval(() => {
-    ticks += 1;
-    void draw(ticks).catch(report);
-  }, TICK_MS);
-
-  // Back leaves the app. Once the timer is cleared and the handler detached, nothing keeps it alive and the device takes the screen back.
-  const unbind = listen("input", (event) => {
-    if (stopped || event.key !== "back" || event.action !== "short") return;
-
-    stopped = true;
-    clearInterval(timer);
-
-    // Not detached from inside the handler itself: with nothing else left the unbind stops the app on the spot, while this handler is still running.
-    setTimeout(unbind, 0);
-  });
-}
-
-main();
+import {desk} from "@shared/desk";
+import {wrap} from "@shared/surface";
+const names=["Ari","Bo","Cam"];
+type S={counts:number[];away:boolean[];last:number;inspect:number};
+function next(s:S){const order=[1,2,3].map(n=>(s.last+n)%3).filter(i=>!s.away[i]);return order.reduce((best,i)=>best<0||s.counts[i]<s.counts[best]?i:best,-1);}
+desk<S>({name:"Desk Relay",accent:"#ED8B86",motion:{"motif":"ticket","color":"#ED8B86","shine":"#FFF0DB"},initial:()=>({counts:[0,0,0],away:[false,false,false],last:2,inspect:-1}),
+ configure:(_,v)=>names.forEach((_,i)=>names[i]=String(v["person"+i]||names[i])),
+ render:s=>{const n=next(s),i=s.inspect<0?n:s.inspect;return {title:s.inspect<0?"Next shift":"Team member",value:i<0?"All away":names[i],
+ lines:[n<0?"Nobody available":"Next: "+names[n],i<0?"Wheel to select":names[i]+" / "+s.counts[i]+" done",i>=0&&s.away[i]?"Marked away":"Available",
+ "Click: complete suggestion","Start: toggle selected away","Wheel: inspect / hold OK: next"]};},
+ action:(s,k)=>{const n=next(s),i=s.inspect<0?n:s.inspect;if(k==="ok"&&n>=0){s.counts[n]++;s.last=n;s.inspect=-1;}
+ if(k==="start"&&i>=0)s.away[i]=!s.away[i];
+ if(k==="up"||k==="down")s.inspect=wrap((i<0?0:i)+(k==="up"?1:-1),3);if(k==="hold-ok")s.inspect=-1;}});

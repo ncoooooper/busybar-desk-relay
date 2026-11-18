@@ -2,7 +2,7 @@
   "name": "busybar-desk-relay",
   "private": true,
   "version": "0.1.0",
-  "description": "Desk Relay",
+  "description": "Give the next desk shift to an available person with the fewest completed turns.",
   "author": "ncoooooper",
   "type": "module",
   "scripts": {

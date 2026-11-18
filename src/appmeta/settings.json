@@ -1,0 +1,24 @@
+{
+  "format_version": 1,
+  "version": 1,
+  "fields": {
+    "person0": {
+      "type": "string",
+      "label": "Person 1",
+      "default": "Ari",
+      "max_length": 16
+    },
+    "person1": {
+      "type": "string",
+      "label": "Person 2",
+      "default": "Bo",
+      "max_length": 16
+    },
+    "person2": {
+      "type": "string",
+      "label": "Person 3",
+      "default": "Cam",
+      "max_length": 16
+    }
+  }
+}
